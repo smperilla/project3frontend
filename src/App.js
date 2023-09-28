@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <h1>Testing</h1>
+      <h1>ZapChat</h1>
       <Outlet></Outlet>
     </div>
   );
