@@ -2,11 +2,12 @@ import React from 'react'
 import { useLoaderData } from 'react-router-dom'
 
 const Folders = () => {
-    const users = useLoaderData()
-    console.log(users);
+    const user = useLoaderData()
+    console.log(user);
   return (
     <div>
-        {users[0].folders.map(f=>{
+        <h1>{user.username}'s inbox</h1>
+        {user.folders.map(f=>{
             return <div key={f.title}>{f.title}</div> 
         })}
     </div>
