@@ -16,3 +16,18 @@ export const createFolder = async ({request})=>{
     })
     return redirect('/users')
 }
+
+export const renameFolder = async ({params, request})=>{
+    const formData = await request.formData()
+    const folder = {
+        title: formData.get('title')
+    }
+    await fetch(url+'/folders/'+params.id, {
+        method: 'put',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(folder)
+    })
+    return redirect('/users')
+}
