@@ -3,7 +3,7 @@ import App from "./App"
 import Test from "./pages/Test"
 import Folders from "./pages/Folders"
 import { usersLoader } from "./loader"
-import { createFolder } from "./action"
+import { createFolder, renameFolder } from "./action"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -11,6 +11,7 @@ const router = createBrowserRouter(
             <Route path="" element={<Test></Test>}></Route>
             <Route path="users" element={<Folders></Folders>} loader={usersLoader}></Route>
             <Route path="createFolder" action={createFolder}></Route>
+            <Route path="renameFolder/:id" action={renameFolder}></Route>
         </Route>
     )
 )
