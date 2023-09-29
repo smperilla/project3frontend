@@ -5,9 +5,13 @@ import Newfolderform from '../components/Newfolderform';
 const Folders = () => {
     const user = useLoaderData()
     const newFolderForm = useRef()
-    const handleClick = ()=>{
-        document.querySelector('button').style.color = 'green'
-        console.log(document.querySelector('button'))
+    const handleClickMakeNew = ()=>{
+        newFolderForm.current.hidden = false
+        document.querySelector('#newFolderButton').hidden = true
+    }
+    const handleClickCancelNew = ()=>{
+        document.querySelector('#newFolderButton').hidden = false
+        newFolderForm.current.hidden = true
     }
   return (
     <div>
@@ -15,9 +19,10 @@ const Folders = () => {
         {user.folders.map(f=>{
             return <div key={f.title}>{f.title}</div> 
         })}
-        <button onClick={handleClick}>+ New Folder</button>
-        <div ref={newFolderForm}>
+        <button id='newFolderButton' onClick={handleClickMakeNew}>+ New Folder</button>
+        <div ref={newFolderForm} hidden>
         <Newfolderform></Newfolderform>
+        <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
     </div>
   )
