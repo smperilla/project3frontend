@@ -1,0 +1,29 @@
+.sidebar{
+    background-color:#61dafb;;
+    width: 250px;
+    height: 100vh;
+    transition: 850ms;
+    border-radius: 3px;
+    position: fixed;
+    top: 0;
+    padding: 16px;
+    line-height: 50px;
+}
+
+.title{
+font-size: 20px;
+color: white;
+border-radius: 20px;
+width: 150px;
+
+display: flex;
+justify-content: center;
+align-items: center;
+/* line-height: 100px; */
+}
+
+.title:hover{
+    background-color:  #ffdf00;
+}
+
+
