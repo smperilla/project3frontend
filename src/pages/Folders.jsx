@@ -30,14 +30,25 @@ const Folders = () => {
         e.target.hidden = true
         e.target.parentElement.parentElement.previousElementSibling.hidden = false
     }
+    const [openChat, setOpenChat] = useState(null)
+    const showChat = (e)=>{
+        const chatToOpen = openFolder.chats.find(c=>c._id==e.target.id)
+        setOpenChat(chatToOpen)
+    }
+    const [openFolder, setOpenFolder] = useState(null)
+    const showFolder = (e)=>{
+        const folderToOpen = user.folders.find(f=>f._id==e.target.id)
+        setOpenFolder(folderToOpen)
+        setOpenChat(null)
+    }
   return (
     <div className='folders'>
         <h1>{user.username}'s inbox</h1>
 
         <div className='sidebar'>  
         {user.folders.map(f=>{
-            return <div key={f.title} className='title' >
-                <div>{f.title}</div>
+            return <div id={f._id} key={f._id} className='title' onClick={showFolder}>
+                <div onClick={showFolder} id={f._id}>{f.title}</div>
                 {f.title==='inbox'||f.title==='deleted'||f.title==='sent' ? <div></div> : <div>
                 <Renamefolderform cancelReName={cancelReName} handleClickReName={handleClickReName} f={f}></Renamefolderform>
                 </div>}
@@ -50,7 +61,7 @@ const Folders = () => {
         <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
         </div>
-        <Chatsinfolder></Chatsinfolder>
+        <Chatsinfolder openFolder={openFolder} openChat={openChat} showChat={showChat}></Chatsinfolder>
     </div>
   )
 }

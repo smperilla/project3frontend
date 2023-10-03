@@ -6,8 +6,8 @@ import {
   import App from "./App";
   import Test from "./pages/Test";
   import Folders from "./pages/Folders";
-  import { usersLoader } from "./loader";
-  import { createFolder, renameFolder } from "./action";
+  import { folderContentLoader, usersLoader } from "./loader";
+  import { createFolder, renameFolder, sendMessage } from "./action";
   import "./App.css";
   
   const router = createBrowserRouter(
@@ -22,6 +22,7 @@ import {
           />
           <Route path="createFolder" action={createFolder} />
           <Route path="renameFolder/:id" action={renameFolder} />
+          <Route path="sendMessage/:id" action={sendMessage}></Route>
         </Route>
      
     )
