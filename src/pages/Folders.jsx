@@ -3,6 +3,7 @@ import { Form, useLoaderData } from 'react-router-dom'
 import Newfolderform from '../components/Newfolderform';
 import Renamefolderform from '../components/Renamefolderform';
 import '../components/Sidebar.css'
+import Chatsinfolder from '../components/Chatsinfolder';
 
 const Folders = () => {
     const user = useLoaderData()
@@ -49,6 +50,7 @@ const Folders = () => {
         <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
         </div>
+        <Chatsinfolder></Chatsinfolder>
     </div>
   )
 }
