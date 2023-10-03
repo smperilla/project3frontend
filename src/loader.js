@@ -5,3 +5,4 @@ export const usersLoader = async ()=>{
     const users = await res.json()
     return users
 }
+

@@ -31,3 +31,18 @@ export const renameFolder = async ({params, request})=>{
     })
     return redirect('/users')
 }
+
+export const sendMessage = async ({request, params})=>{
+    const formData = await request.formData()
+    const message = {
+        zap: formData.get('zap')
+    }
+    await fetch(url+'/chats/'+params.id, {
+        method: 'put',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(message)
+    })
+    return redirect('/users')
+}
