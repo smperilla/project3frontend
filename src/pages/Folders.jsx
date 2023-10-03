@@ -4,6 +4,7 @@ import Newfolderform from '../components/Newfolderform';
 import Renamefolderform from '../components/Renamefolderform';
 import '../components/Sidebar.css'
 import Chatsinfolder from '../components/Chatsinfolder';
+import Newmessageform from '../components/Newmessageform';
 
 const Folders = () => {
     const user = useLoaderData()
@@ -41,11 +42,16 @@ const Folders = () => {
         setOpenFolder(folderToOpen)
         setOpenChat(null)
     }
+    const newDraft = ()=>{
+        document.querySelector('#spaceForNewMessage').hidden = true
+        document.querySelector('#newMessageForm').hidden = false
+    }
   return (
     <div className='folders'>
         <h1>{user.username}'s inbox</h1>
 
         <div className='sidebar'>  
+        <button onClick={newDraft}>New Message</button>
         {user.folders.map(f=>{
             return <div id={f._id} key={f._id} className='title' onClick={showFolder}>
                 <div onClick={showFolder} id={f._id}>{f.title}</div>
@@ -61,7 +67,10 @@ const Folders = () => {
         <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
         </div>
+        <div id='spaceForNewMessage'>
         <Chatsinfolder openFolder={openFolder} openChat={openChat} showChat={showChat}></Chatsinfolder>
+        </div>
+        <div id='newMessageForm' hidden><Newmessageform></Newmessageform></div>
     </div>
   )
 }

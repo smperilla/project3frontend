@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-router-dom'
 
 const Openchat = (props) => {
     const loaded = ()=>{
         return(
             <div>
-                <h3>Conversation with: {props.openChat.users.map(u=>(u.username))}</h3>
+                {props.openChat.users.length===2?
+                <h3>Conversation with: {props.openChat.users[0].username} and {props.openChat.users[1].username}</h3>
+                :
+                <h3>Conversation with: {props.openChat.users.map(u=>(u.username+' '))}</h3>
+                }
                 <h3>Subject: {props.openChat.subject}</h3>
                 {props.openChat.zaps.map((z,i)=>{
                     return (
