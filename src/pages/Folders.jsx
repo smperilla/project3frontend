@@ -55,7 +55,7 @@ const Folders = () => {
         {user.folders.map(f=>{
             return <div id={f._id} key={f._id} className='title' onClick={showFolder}>
                 <div onClick={showFolder} id={f._id}>{f.title}</div>
-                {f.title==='inbox'||f.title==='deleted'||f.title==='sent' ? <div></div> : <div>
+                {f.title==='inbox'||f.title==='deleted'||f.title==='sent'||f.title=='drafts' ? <div></div> : <div>
                 <Renamefolderform cancelReName={cancelReName} handleClickReName={handleClickReName} f={f}></Renamefolderform>
                 </div>}
                 {/* style={{display:'flex', flexDirection:'row'}} */}
