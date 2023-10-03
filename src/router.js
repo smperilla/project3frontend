@@ -7,7 +7,7 @@ import {
   import Test from "./pages/Test";
   import Folders from "./pages/Folders";
   import { folderContentLoader, usersLoader } from "./loader";
-  import { createFolder, renameFolder, sendMessage } from "./action";
+  import { createFolder, newChat, renameFolder, sendMessage } from "./action";
   import "./App.css";
   
   const router = createBrowserRouter(
@@ -23,6 +23,7 @@ import {
           <Route path="createFolder" action={createFolder} />
           <Route path="renameFolder/:id" action={renameFolder} />
           <Route path="sendMessage/:id" action={sendMessage}></Route>
+          <Route path="newChat" action={newChat}></Route>
         </Route>
      
     )
