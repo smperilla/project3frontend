@@ -2,7 +2,13 @@
   text-align: center;
 }
 
-
+.logo{
+  font-size: 48px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color:#FFD800;
+  text-align: center;
+  margin-top: 0;
+}
 @media (prefers-reduced-motion: no-preference) {
   .logo {
     animation: App-logo-spin infinite 20s linear;
