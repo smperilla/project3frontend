@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
 function App() {
-  const socket = io('http://127.0.0.1:4000', {autoConnect:false, path:'/socket.io/'});
+  const socket = io('http://127.0.0.1:4000', {path:'/socket.io/'});
   useEffect(() => {
     console.log(socket)
     // Now you can use 'socket' to listen for events and emit data to the server.
