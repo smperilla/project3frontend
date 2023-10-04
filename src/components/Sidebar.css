@@ -1,11 +1,11 @@
 .sidebar{
     background-color:#61dafb;;
     width: 250px;
-    height: 100vh;
+    height: 95vh;
     transition: 850ms;
     border-radius: 3px;
     position: fixed;
-    top: 0;
+    /* top: 3; */
     padding: 16px;
     line-height: 50px;
 }
@@ -23,7 +23,18 @@ align-items: center;
 }
 
 .title:hover{
-    background-color:  #ffdf00;
+    background-color:  #FFD800;
+}
+.upperDiv{
+    width: 100vw;
+    background-color: rgba(0, 0, 255, 0.5);
+    height: 150px;
+    margin-top: 0;
+    justify-content: space-between;
+    padding:20px 0;
 }
 
+.csinbox{
+text-align: left;
+}
 
