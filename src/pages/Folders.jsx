@@ -1,13 +1,63 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form, useLoaderData } from 'react-router-dom'
 import Newfolderform from '../components/Newfolderform';
 import Renamefolderform from '../components/Renamefolderform';
 import '../components/Sidebar.css'
 import Chatsinfolder from '../components/Chatsinfolder';
 import Newmessageform from '../components/Newmessageform';
+import { io } from 'socket.io-client';
 
 const Folders = () => {
-    const user = useLoaderData()
+    const socket = io('http://127.0.0.1:4000');
+    // , {path:'/socket.io/'}
+    useEffect(() => {
+      socket.on('connect', () => {
+        console.log('Connected to Socket.io server');
+      });
+      socket.on('disconnect', () => {
+        console.log('disConnected from Socket.io server');
+      });
+      socket.on('message', (data) => {
+        console.log('Received message from server:', data);
+      });
+      
+      socket.on('hello', (word)=>{
+          console.log(word);
+          fetchData()
+      })
+      
+      socket.onAny((event, ...args) => {
+          console.log(event, args);
+        });
+        console.log(socket);
+      
+      return 
+    //   () => {
+    //     socket.disconnect();
+    //   };
+    }, []);
+    const emit = (e)=>{
+      e.preventDefault()
+      socket.emit('grabobject', 'grabing object')
+    }
+    socket.on('object', (word)=>{
+        console.log(word);
+        setUser(word)
+    })
+
+    const [user, setUser] = useState(useLoaderData())
+    // const user = useLoaderData()
+    const fetchData = async () => {
+        try {
+            const res = await fetch('http://localhost:4000/users/6515dc9ffc1ca272ca121d28')
+            const data = await res.json();
+            console.log('fetching')
+            console.log(data);
+            setUser(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
     const newFolderForm = useRef()
     const handleClickMakeNew = ()=>{
         newFolderForm.current.hidden = false
@@ -49,6 +99,7 @@ const Folders = () => {
   return (
     <div className='folders'>
         <h1>{user.username}'s inbox</h1>
+        <button onClick={emit}>Test!</button>
 
         <div className='sidebar'>  
         <button onClick={newDraft}>New Message</button>
@@ -68,7 +119,7 @@ const Folders = () => {
         </div>
         </div>
         <div id='spaceForNewMessage'>
-        <Chatsinfolder openFolder={openFolder} openChat={openChat} showChat={showChat}></Chatsinfolder>
+        <Chatsinfolder openFolder={openFolder} openChat={openChat} showChat={showChat} emit={emit}></Chatsinfolder>
         </div>
         <div id='newMessageForm' hidden><Newmessageform></Newmessageform></div>
     </div>

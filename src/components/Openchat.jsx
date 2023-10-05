@@ -13,7 +13,7 @@ const Openchat = (props) => {
                 <h3>Subject: {props.openChat.subject}</h3>
                 {props.openChat.zaps.map((z,i)=>{
                     return (
-                        <div key={z}>
+                        <div key={z+i}>
                             {props.openChat.zapAuthors[i].username}: {z}
                         </div>
                     )
