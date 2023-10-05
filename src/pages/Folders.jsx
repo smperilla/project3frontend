@@ -5,6 +5,7 @@ import Renamefolderform from "../components/Renamefolderform";
 import "../components/Sidebar.css";
 import Chatsinfolder from "../components/Chatsinfolder";
 import Newmessageform from "../components/Newmessageform";
+import Logout from "../components/Logout";
 
 const Folders = () => {
   const user = useLoaderData();
@@ -55,6 +56,7 @@ const Folders = () => {
 
       <div className="sidebar">
         <button onClick={newDraft}>New Message</button>
+    <Logout/>   
         {user.folders.map((f) => {
           return (
             <div id={f._id} key={f._id} className="title" onClick={showFolder}>
