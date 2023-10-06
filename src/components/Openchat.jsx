@@ -18,10 +18,14 @@ const Openchat = (props) => {
                         </div>
                     )
                 })}
-                <Form action={`/sendMessage/${props.openChat._id}`} method='post'>
+                {/* <Form action={`/sendMessage/${props.openChat._id}`} method='post'>
                     <input type="text" name='zap' placeholder='type message here'/>
                     <input type="submit" value="Send"/>
-                </Form>
+                </Form> */}
+                <form onSubmit={props.sendMessage}>
+                    <input onChange={props.handleSendMsgChange} type="text" name='zap' placeholder='type message here' value={props.textBar.zap}/>
+                    <input type="submit" value='send' />
+                </form>
             </div>
         )
     }

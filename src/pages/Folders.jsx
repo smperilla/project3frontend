@@ -14,6 +14,7 @@ const Folders = () => {
     useEffect(() => {
       socket.on('connect', () => {
         console.log('Connected to Socket.io server');
+        console.log(document.cookie)
       });
       socket.on('disconnect', () => {
         console.log('disConnected from Socket.io server');
@@ -86,6 +87,7 @@ const Folders = () => {
   const showChat = (e) => {
     const chatToOpen = openFolder.chats.find((c) => c._id == e.target.id);
     setOpenChat(chatToOpen);
+    setTextBar({zap:'', chatId:chatToOpen._id, folderId:openFolder._id})
   };
   const [openFolder, setOpenFolder] = useState(null);
   const showFolder = (e) => {
@@ -97,6 +99,25 @@ const Folders = () => {
     document.querySelector("#spaceForNewMessage").hidden = true;
     document.querySelector("#newMessageForm").hidden = false;
   };
+  const [textBar, setTextBar] = useState()
+  const handleSendMsgChange = (e)=>{
+    setTextBar(prevState=>{
+        return {...prevState, [e.target.name] : e.target.value}
+    })
+  }
+  const sendMessage = (e)=>{
+    e.preventDefault()
+    console.log(textBar.zap);
+    console.log(textBar.chatId);
+    socket.emit('sendMessage', textBar)
+  }
+  socket.on('sentMessage', (updatedChat, updatedUser, folder)=>{
+    setOpenChat(updatedChat)
+    setTextBar({zap:'', chatId:updatedChat._id})
+    setUser(updatedUser)
+    setOpenFolder(folder)
+    console.log(updatedChat);
+  })
   return (
     <div className="folders">
       <div className="upperDiv">
@@ -145,6 +166,9 @@ const Folders = () => {
           openFolder={openFolder}
           openChat={openChat}
           showChat={showChat}
+          sendMessage={sendMessage}
+          handleSendMsgChange={handleSendMsgChange}
+          textBar={textBar}
         ></Chatsinfolder>
       </div>
       <div id="newMessageForm" hidden>

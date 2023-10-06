@@ -19,7 +19,14 @@ const Chatsinfolder = (props) => {
                 <div>
                 {props.openFolder.chats.length===0?'this folder is empty': ''}
                 </div>
-                <Openchat openChat={props.openChat} emit={props.emit}></Openchat>
+                <Openchat 
+                    openChat={props.openChat} 
+                    emit={props.emit}
+                    sendMessage={props.sendMessage}
+                    handleSendMsgChange={props.handleSendMsgChange}
+                    textBar={props.textBar}
+                    >    
+                </Openchat>
             </div>
         )
     }

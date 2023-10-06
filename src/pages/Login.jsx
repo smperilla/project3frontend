@@ -23,11 +23,12 @@ function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include',
       });
-      console.log(response);
       if (response.ok) {
+        console.log(response.ok);
         // Redirect to the dashboard or any other protected route upon successful login
-        window.location.href = '/users';
+        // window.location.href = '/users';
       } else {
         const data = await response.json();
         setError(data.message || 'Login failed. Please try again.');
