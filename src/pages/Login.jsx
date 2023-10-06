@@ -25,10 +25,12 @@ function Login() {
         body: JSON.stringify({ username, password }),
         credentials: 'include',
       });
-      if (response.ok) {
-        console.log(response.ok);
+      // console.log(await response.json());
+      const result = await response.json()
+      if (result.message=='success') {
         // Redirect to the dashboard or any other protected route upon successful login
-        // window.location.href = '/users';
+        console.log(result);
+        window.location.href = `/users/${result.userid}`;
       } else {
         const data = await response.json();
         setError(data.message || 'Login failed. Please try again.');

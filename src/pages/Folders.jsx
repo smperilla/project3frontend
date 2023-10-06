@@ -109,7 +109,7 @@ const Folders = () => {
     e.preventDefault()
     console.log(textBar.zap);
     console.log(textBar.chatId);
-    socket.emit('sendMessage', textBar)
+    socket.emit('sendMessage', textBar, user._id)
   }
   socket.on('sentMessage', (updatedChat, updatedUser, folder)=>{
     setOpenChat(updatedChat)
