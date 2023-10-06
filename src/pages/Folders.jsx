@@ -53,7 +53,7 @@ const Folders = () => {
         <h1 className="logo">ZapChat</h1>
         <h1 className="csinbox">{user.username}'s inbox</h1>
       </div>
-
+      
       <div className="sidebar">
         <button onClick={newDraft}>New Message</button>
     <Logout/>   
@@ -89,7 +89,7 @@ const Folders = () => {
           <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
       </div>
-      <div id="spaceForNewMessage">
+      <div className="spaceForNewMessage" id="newMessage">
         <Chatsinfolder
           openFolder={openFolder}
           openChat={openChat}
