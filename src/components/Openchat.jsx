@@ -19,8 +19,8 @@ const Openchat = (props) => {
                     )
                 })}
                 <Form action={`/sendMessage/${props.openChat._id}`} method='post'>
-                    <input type="text" name='zap' placeholder='type message here'/>
-                    <input type="submit" value="Send"/>
+                    <input type="text" name='zap' placeholder='type message here' className='msgtxtinput'/>
+                    <input type="submit" value="Send" className='msgsubmitinput'/>
                 </Form>
             </div>
         )

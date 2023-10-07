@@ -55,18 +55,18 @@ const Folders = () => {
       </div>
       
       <div className="sidebar">
-        <button onClick={newDraft}>New Message</button>
+        <button onClick={newDraft} className="newmessagebtn" id="">New Message</button>
     <Logout/>   
         {user.folders.map((f) => {
           return (
             <div id={f._id} key={f._id} className="title" onClick={showFolder}>
-              <div onClick={showFolder} id={f._id}>
+              <div onClick={showFolder} id={f._id} className="showfolder">
                 {f.title}
               </div>
               {f.title === "inbox" ||
               f.title === "deleted" ||
               f.title === "sent" ||
-              f.title == "drafts" ? (
+              f.title === "drafts" ? (
                 <div></div>
               ) : (
                 <div>
@@ -81,7 +81,7 @@ const Folders = () => {
             </div>
           );
         })}
-        <button id="newFolderButton" onClick={handleClickMakeNew}>
+        <button id="newFolderBtn" onClick={handleClickMakeNew}>
           + New Folder
         </button>
         <div ref={newFolderForm} hidden>

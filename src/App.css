@@ -1,13 +1,13 @@
 body{
-  margin: 0;
-  padding: 0;
+  background-color: rgb(97, 218, 251);
+  z-index: -10px;
 }
 .App {
   text-align: center;
 }
 
 .logo{
-  font-size: 48px;
+  font-size: 58px;
   font-family:Verdana, Geneva, Tahoma, sans-serif;
   color:#FFD800;
   text-align: center;
