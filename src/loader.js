@@ -1,4 +1,4 @@
-const url = 'http://localhost:4000'
+const url = 'https://zapchatbackend.onrender.com'
 
 export const usersLoader = async ({params})=>{
     const res = await fetch(url+'/users/'+params.id)

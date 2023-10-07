@@ -7,9 +7,10 @@ import Chatsinfolder from "../components/Chatsinfolder";
 import Newmessageform from "../components/Newmessageform";
 import Logout from "../components/Logout";
 import { io } from 'socket.io-client';
+import Movefolderpopup from "../components/Movefolderpopup";
 
 const Folders = () => {
-  const socket = io('http://127.0.0.1:4000');
+  const socket = io(process.env.REACT_APP_API_KEY);
     // , {path:'/socket.io/'}
     useEffect(() => {
       socket.on('connect', () => {
@@ -99,6 +100,10 @@ const Folders = () => {
     document.querySelector("#spaceForNewMessage").hidden = true;
     document.querySelector("#newMessageForm").hidden = false;
   };
+  const cancelSend = () =>{
+    document.querySelector("#spaceForNewMessage").hidden = false;
+    document.querySelector("#newMessageForm").hidden = true;
+  }
   const [textBar, setTextBar] = useState()
   const handleSendMsgChange = (e)=>{
     setTextBar(prevState=>{
@@ -117,6 +122,69 @@ const Folders = () => {
     setUser(updatedUser)
     setOpenFolder(folder)
     console.log(updatedChat);
+  })
+  const renameFolderSocket = (e)=>{
+    e.preventDefault()
+    console.log(e.target.title.value);
+    socket.emit('renameFolder', e.target.title.value, e.target.id.value, user._id)
+    let form = e.target
+    form.hidden = true;
+    form.previousSibling.hidden = false;
+    form.nextSibling.hidden = true;
+    e.target.parentElement.parentElement.previousElementSibling.hidden = false;
+  }
+  socket.on('renamedFolder', (updatedUser)=>{
+    setUser(updatedUser)
+  })
+  const submitNewFolder = (e)=>{
+    e.preventDefault()
+    socket.emit('makeNewFolder', e.target.title.value, user._id)
+    e.target.title.value = ''
+    handleClickCancelNew()
+  }
+  socket.on('createdFolder', (updatedUser)=>{
+    setUser(updatedUser)
+  })
+  const startNewChat = (e)=>{
+    e.preventDefault()
+    let recipients = e.target.recipients.value
+    let subject = e.target.subject.value
+    let zap = e.target.zap.value
+    socket.emit('startNewChat', recipients, subject, zap, user._id)
+    e.target.recipients.value = ''
+    e.target.subject.value = ''
+    e.target.zap.value = ''
+    cancelSend()
+  }
+  socket.on('createdNewChat', (updatedUser)=>{
+    setUser(updatedUser)
+    setOpenFolder(updatedUser.folders[0])
+  })
+  const [moveFolderButton, setMoveFolderButton] = useState(false)
+  const openMoveFolder =(e)=> {
+    console.log(e.target);
+    console.log(e.target.previousSibling.className);
+    setMoveFolderButton({
+      subject:e.target.previousSibling.innerText,
+      chatId:e.target.previousSibling.id,
+      currentFolderId:e.target.previousSibling.className
+    })
+  }
+  const closeMoveFolder = ()=>{setMoveFolderButton(false)}
+  const moveFolder = (e)=>{
+    e.preventDefault()
+    console.log(moveFolderButton);
+    console.log(e.target.folderToMoveTo.value);
+    if (moveFolderButton.currentFolderId===e.target.folderToMoveTo.value){
+      setMoveFolderButton(false)
+    }else {
+      socket.emit('moveFolder', moveFolderButton, e.target.folderToMoveTo.value, user._id)
+      setMoveFolderButton(false)
+    }
+  }
+  socket.on('movedFolder', (updatedUser, destination)=>{
+    setUser(updatedUser)
+    setOpenFolder(destination)
   })
   return (
     <div className="folders">
@@ -146,6 +214,7 @@ const Folders = () => {
                     cancelReName={cancelReName}
                     handleClickReName={handleClickReName}
                     f={f}
+                    renameFolderSocket={renameFolderSocket}
                   ></Renamefolderform>
                 </div>
               )}
@@ -157,7 +226,7 @@ const Folders = () => {
           + New Folder
         </button>
         <div ref={newFolderForm} hidden>
-          <Newfolderform></Newfolderform>
+          <Newfolderform submitNewFolder={submitNewFolder}></Newfolderform>
           <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
       </div>
@@ -169,11 +238,13 @@ const Folders = () => {
           sendMessage={sendMessage}
           handleSendMsgChange={handleSendMsgChange}
           textBar={textBar}
+          openMoveFolder={openMoveFolder}
         ></Chatsinfolder>
       </div>
       <div id="newMessageForm" hidden>
-        <Newmessageform></Newmessageform>
+        <Newmessageform cancelSend={cancelSend} startNewChat={startNewChat}></Newmessageform>
       </div>
+      <Movefolderpopup moveFolderTrigger={moveFolderButton} closeMoveFolder={closeMoveFolder} folders={user.folders} moveFolder={moveFolder}></Movefolderpopup>
     </div>
   );
 };

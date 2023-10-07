@@ -23,7 +23,7 @@ const Openchat = (props) => {
                     <input type="submit" value="Send"/>
                 </Form> */}
                 <form onSubmit={props.sendMessage}>
-                    <input onChange={props.handleSendMsgChange} type="text" name='zap' placeholder='type message here' value={props.textBar.zap}/>
+                    <input onChange={props.handleSendMsgChange} type="text" name='zap' placeholder='type message here' value={props.textBar.zap} required/>
                     <input type="submit" value='send' />
                 </form>
             </div>

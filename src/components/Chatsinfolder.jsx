@@ -14,7 +14,7 @@ const Chatsinfolder = (props) => {
                     {props.openFolder.title}
                 </h2>
                 {props.openFolder.chats.map(c=>{
-                    return <div id={c._id} onClick={props.showChat} key={c._id}>{c.subject}</div>
+                    return <div key={c._id} style={{display:'flex',flexDirection:'row',justifyContent:'center'}}><div className={props.openFolder._id} id={c._id} onClick={props.showChat} >{c.subject}</div><button style={{width:'30px',height:'30px'}} onClick={props.openMoveFolder}>↩️</button></div>
                 })}
                 <div>
                 {props.openFolder.chats.length===0?'this folder is empty': ''}

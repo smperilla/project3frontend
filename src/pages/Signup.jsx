@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:4000/login/signup', {
+      const response = await fetch('https://zapchatbackend.onrender.com/login/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
