@@ -13,15 +13,19 @@ const Openchat = (props) => {
                 <h3>Subject: {props.openChat.subject}</h3>
                 {props.openChat.zaps.map((z,i)=>{
                     return (
-                        <div key={z}>
+                        <div key={z+i+props.user._id}>
                             {props.openChat.zapAuthors[i].username}: {z}
                         </div>
                     )
                 })}
-                <Form action={`/sendMessage/${props.openChat._id}`} method='post'>
-                    <input type="text" name='zap' placeholder='type message here' className='msgtxtinput'/>
-                    <input type="submit" value="Send" className='msgsubmitinput'/>
-                </Form>
+                {/* <Form action={`/sendMessage/${props.openChat._id}`} method='post'>
+                    <input type="text" name='zap' placeholder='type message here'/>
+                    <input type="submit" value="Send"/>
+                </Form> */}
+                <form onSubmit={props.sendMessage}>
+                    <input onChange={props.handleSendMsgChange} type="text" name='zap' placeholder='type message here' value={props.textBar} required/>
+                    <input type="submit" value='send' />
+                </form>
             </div>
         )
     }

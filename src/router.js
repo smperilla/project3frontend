@@ -17,7 +17,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<Test />} />
-      <Route path="users" element={<Folders />} loader={usersLoader} />
+      <Route path="users/:id" element={<Folders />} loader={usersLoader} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
 

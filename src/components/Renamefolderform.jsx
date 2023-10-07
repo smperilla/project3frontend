@@ -16,10 +16,15 @@ const Renamefolderform = (props) => {
   return (
     <div>
         <button onClick={props.handleClickReName}>✏️</button>
-        <Form action={`/renameFolder/${props.f._id}`} method='post' hidden>
+        <form onSubmit={props.renameFolderSocket} hidden>
+            <input name='id' defaultValue={renameFolderForm._id} hidden/>
             <input onChange={handleChangeReNameFolder} type="text" name='title' placeholder='rename folder' value={renameFolderForm.title}/>
             <input type="submit" value="rename folder"/>
-        </Form> 
+        </form> 
+        {/* <Form action={`/renameFolder/${props.f._id}`} method='post' hidden>
+            <input onChange={handleChangeReNameFolder} type="text" name='title' placeholder='rename folder' value={renameFolderForm.title}/>
+            <input type="submit" value="rename folder"/>
+        </Form>  */}
         <button onClick={resetForm} hidden>cancel rename</button>
     </div>
   )

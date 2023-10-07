@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-const url = 'http://localhost:4000'
+const url = process.env.REACT_APP_API_KEY
 
 export const createFolder = async ({request})=>{
     const formData = await request.formData()

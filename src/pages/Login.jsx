@@ -17,17 +17,20 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:4000/login', {
+      const response = await fetch(process.env.REACT_APP_API_KEY+'/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        // credentials: 'include',
       });
-      console.log(response);
-      if (response.ok) {
+      // console.log(await response.json());
+      const result = await response.json()
+      if (result.message=='success') {
         // Redirect to the dashboard or any other protected route upon successful login
-        window.location.href = '/users';
+        console.log(result);
+        window.location.href = `/users/${result.userid}`;
       } else {
         const data = await response.json();
         setError(data.message || 'Login failed. Please try again.');
