@@ -15,6 +15,10 @@ const Renamefolderform = (props) => {
     }
   return (
     <div>
+        <form onSubmit={props.deleteFolder}>
+            <input name='folderId' defaultValue={props.f._id} hidden/>
+            <input type="submit" value="X" />
+        </form>
         <button onClick={props.handleClickReName}>✏️</button>
         <form onSubmit={props.renameFolderSocket} hidden>
             <input name='id' defaultValue={renameFolderForm._id} hidden/>
