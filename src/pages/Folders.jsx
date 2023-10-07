@@ -225,6 +225,15 @@ const Folders = () => {
       setOpenChat(chat)
     }
   })
+  const deleteFolder = (e)=>{
+    e.preventDefault()
+    console.log('delete');
+    socket.emit('deleteFolder', e.target.folderId.value, user._id)
+  }
+  socket.on('deletedFolder', (updatedInbox, updatedUser)=>{
+    setUser(updatedUser)
+    setOpenFolder(updatedInbox)
+  })
   return (
     <div className="folders">
       <div className="upperDiv">
@@ -255,6 +264,7 @@ const Folders = () => {
                     handleClickReName={handleClickReName}
                     f={f}
                     renameFolderSocket={renameFolderSocket}
+                    deleteFolder={deleteFolder}
                   ></Renamefolderform>
                 </div>
               )}
