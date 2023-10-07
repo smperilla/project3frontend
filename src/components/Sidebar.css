@@ -1,40 +1,108 @@
-.sidebar{
-    background-color:#61dafb;;
-    width: 250px;
-    height: 95vh;
-    transition: 850ms;
-    border-radius: 3px;
-    position: fixed;
-    /* top: 3; */
-    padding: 16px;
-    line-height: 50px;
+.sidebar {
+  /* background-color: rgb(97, 218, 251); */
+  width: 250px;
+  height: 60%;
+  border-radius: 3px;
+  position: fixed;
+  top: 190px;
+  padding: 16px;
+  line-height: 40px;
+  color: black;
+  overflow-y:scroll;
 }
 
-.title{
-font-size: 20px;
-color: white;
-border-radius: 20px;
-width: 150px;
-
-display: flex;
-justify-content: center;
-align-items: center;
-/* line-height: 100px; */
+.title {
+  font-size: 20px;
+  color: white;
+  border-radius: 20px;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* line-height: 100px; */
 }
 
-.title:hover{
-    background-color:  #FFD800;
+.title:hover {
+  background-color: rgba(139, 219, 77, 0.4);
 }
-.upperDiv{
-    width: 100vw;
-    background-color: rgba(0, 0, 255, 0.5);
-    height: 150px;
-    margin-top: 0;
-    justify-content: space-between;
-    padding:20px 0;
-}
-
-.csinbox{
-text-align: left;
+.upperDiv {
+  width: 100vw;
+  background-color: rgba(0, 0, 255, 0.5);
+  height: 150px;
+  margin-top: 0;
+  position: fixed;
+  justify-content: space-between;
+  padding: 20px 0;
 }
 
+.csinbox {
+  text-align: left;
+  margin-left: 40px;
+}
+
+.spaceForNewMessage {
+  background-color:rgba(240, 255, 255, 0.3);
+  box-shadow: 4px 4px 12px 12px rgba(139, 219, 77, 0.4);
+  height: 610px;
+  width: 300px;
+  margin-top: 12px;
+  position: absolute;
+  border-radius: 15px;
+  /* overflow-y:scroll; */
+}
+
+#newMessage {
+  left: 350px;
+  position: fixed;
+  top: 190px;
+}
+
+#openchat{
+    left:320px;
+    bottom: 0px; 
+    
+}
+
+.startchatting{
+    background-color:rgba(240, 255, 255, 0.3);
+    box-shadow: 4px 4px 12px 12px rgba(139, 219, 77, 0.4);
+    height: 610px;
+    width:800px;
+    margin-top: 10px;
+    position: absolute;
+    border-radius: 15px;
+ 
+}
+
+.showfolder{
+color: black;
+font-size: 24px;
+
+
+}
+
+.newmessagebtn{
+    height: 40px;
+    border-radius: 12px;
+}
+
+#newFolderBtn{
+    height: 40px;
+    border-radius: 12px;
+    
+}
+
+.msgtxtinput{
+    height: 100px;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+.msgsubmitinput{
+    height: 100px;
+    border-radius: 15px;
+}
+.msgsubmitinput:hover{
+    background-color: rgb(3, 218, 121);
+}
