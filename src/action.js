@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom"
 
-const url = 'https://zapchatbackend.onrender.com'
+const url = process.env.REACT_APP_API_KEY
 
 export const createFolder = async ({request})=>{
     const formData = await request.formData()

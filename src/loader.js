@@ -1,4 +1,4 @@
-const url = 'https://zapchatbackend.onrender.com'
+const url = process.env.REACT_APP_API_KEY
 
 export const usersLoader = async ({params})=>{
     const res = await fetch(url+'/users/'+params.id)

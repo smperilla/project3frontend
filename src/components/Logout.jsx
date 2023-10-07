@@ -3,7 +3,7 @@ import React from 'react';
 function Logout() {
   const handleLogout = async () => {
     try {
-      const response = await fetch('https://zapchatbackend.onrender.com/login/logout', {
+      const response = await fetch(process.env.REACT_APP_API_KEY+'/login/logout', {
         method: 'POST',
       });
 

@@ -17,7 +17,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://zapchatbackend.onrender.com/login/signup', {
+      const response = await fetch(process.env.REACT_APP_API_KEY+'/login/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

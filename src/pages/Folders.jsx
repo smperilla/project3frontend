@@ -8,6 +8,7 @@ import Newmessageform from "../components/Newmessageform";
 import Logout from "../components/Logout";
 import { io } from 'socket.io-client';
 import Movefolderpopup from "../components/Movefolderpopup";
+import Newchatpopup from "../components/Newchatpopup";
 
 const Folders = () => {
   const socket = io(process.env.REACT_APP_API_KEY);
@@ -34,10 +35,10 @@ const Folders = () => {
         });
         console.log(socket);
       
-      return 
-    //   () => {
-    //     socket.disconnect();
-    //   };
+      return
+      //  () => {
+      //   socket.disconnect();
+      // };
     }, []);
     const emit = (e)=>{
       e.preventDefault()
@@ -64,10 +65,10 @@ const Folders = () => {
   const newFolderForm = useRef();
   const handleClickMakeNew = () => {
     newFolderForm.current.hidden = false;
-    document.querySelector("#newFolderButton").hidden = true;
+    document.querySelector("#newFolderBtn").hidden = true;
   };
   const handleClickCancelNew = () => {
-    document.querySelector("#newFolderButton").hidden = false;
+    document.querySelector("#newFolderBtn").hidden = false;
     newFolderForm.current.hidden = true;
   };
   const handleClickReName = (e) => {
@@ -88,7 +89,8 @@ const Folders = () => {
   const showChat = (e) => {
     const chatToOpen = openFolder.chats.find((c) => c._id == e.target.id);
     setOpenChat(chatToOpen);
-    setTextBar({zap:'', chatId:chatToOpen._id, folderId:openFolder._id})
+    // setTextBar({zap:'', chatId:chatToOpen._id, folderId:openFolder._id})
+    setTextBar('')
   };
   const [openFolder, setOpenFolder] = useState(null);
   const showFolder = (e) => {
@@ -97,24 +99,30 @@ const Folders = () => {
     setOpenChat(null);
   };
   const newDraft = () => {
-    document.querySelector("#spaceForNewMessage").hidden = true;
+    document.querySelector("#newMessage").hidden = true;
     document.querySelector("#newMessageForm").hidden = false;
   };
   const cancelSend = () =>{
-    document.querySelector("#spaceForNewMessage").hidden = false;
+    document.querySelector("#newMessage").hidden = false;
     document.querySelector("#newMessageForm").hidden = true;
   }
   const [textBar, setTextBar] = useState()
   const handleSendMsgChange = (e)=>{
-    setTextBar(prevState=>{
-        return {...prevState, [e.target.name] : e.target.value}
-    })
+    const newValue = e.target.value
+    setTextBar(newValue)
+    // setTextBar(prevState=>{
+    //     return {...prevState, [e.target.name] : e.target.value}
+    // })
   }
   const sendMessage = (e)=>{
     e.preventDefault()
-    console.log(textBar.zap);
-    console.log(textBar.chatId);
-    socket.emit('sendMessage', textBar, user._id)
+    // console.log(textBar.zap);
+    // console.log(textBar.chatId);
+    let data = {}
+    data.zap = textBar
+    data.chatId = openChat._id
+    data.folderId = openFolder._id
+    socket.emit('sendMessage', data, user._id)
   }
   socket.on('sentMessage', (updatedChat, updatedUser, folder)=>{
     setOpenChat(updatedChat)
@@ -154,7 +162,8 @@ const Folders = () => {
     e.target.recipients.value = ''
     e.target.subject.value = ''
     e.target.zap.value = ''
-    cancelSend()
+    // cancelSend()
+    closeNewChat()
   }
   socket.on('createdNewChat', (updatedUser)=>{
     setUser(updatedUser)
@@ -186,27 +195,58 @@ const Folders = () => {
     setUser(updatedUser)
     setOpenFolder(destination)
   })
+  const [newChatButton, setNewChatButton] = useState(false)
+  const openNewChat = (e)=>{
+    setNewChatButton(true)
+  }
+  const closeNewChat = ()=>{setNewChatButton(false)}
+  socket.on('update', (word)=>{
+    console.log(word);
+    if (openFolder&&openChat){
+      console.log('updateMe', user._id, openFolder._id, openChat._id);
+      socket.emit('updateMe', user._id, openFolder._id, openChat._id)
+    }
+  })
+  socket.on('updatedYou', (updatedUser, folder, chat)=>{
+    console.log('updated you');
+    console.log(updatedUser);
+    setUser(updatedUser)
+    // setOpenFolder(folder)
+    // setOpenChat(chat)
+    if (openFolder){
+      // const updatedFolder = user.folders.find(f=>f._id==openFolder._id)
+      // setOpenFolder(updatedFolder)
+      setOpenFolder(folder)
+    }
+    if (openChat){
+      // const updatedChatFolder = user.folders.find(f=>f._id==openFolder._id)
+      // const updatedChat = updatedChatFolder.chats.find(c=>c._id=openChat._id)
+      // setOpenChat(updatedChat)
+      setOpenChat(chat)
+    }
+  })
   return (
     <div className="folders">
       <div className="upperDiv">
         <h1 className="logo">ZapChat</h1>
         <h1 className="csinbox">{user.username}'s inbox</h1>
-        <button onClick={emit}>Test!</button>
+        {/* <button onClick={emit}>Test!</button> */}
       </div>
-
+      
       <div className="sidebar">
-        <button onClick={newDraft}>New Message</button>
+        <button onClick={openNewChat} className="newmessagebtn" id="">New Message</button>
+        {/* <button onClick={newDraft} className="newmessagebtn" id="">New Message</button> */}
     <Logout/>   
         {user.folders.map((f) => {
           return (
             <div id={f._id} key={f._id} className="title" onClick={showFolder}>
-              <div onClick={showFolder} id={f._id}>
+              <div onClick={showFolder} id={f._id} className="showfolder">
                 {f.title}
               </div>
               {f.title === "inbox" ||
               f.title === "deleted" ||
               f.title === "sent" ||
-              f.title == "drafts" ? (
+              f.title === "drafts" ? (
                 <div></div>
               ) : (
                 <div>
@@ -222,7 +262,7 @@ const Folders = () => {
             </div>
           );
         })}
-        <button id="newFolderButton" onClick={handleClickMakeNew}>
+        <button id="newFolderBtn" onClick={handleClickMakeNew}>
           + New Folder
         </button>
         <div ref={newFolderForm} hidden>
@@ -230,7 +270,7 @@ const Folders = () => {
           <button onClick={handleClickCancelNew}>Cancel New Form</button>
         </div>
       </div>
-      <div id="spaceForNewMessage">
+      <div className="spaceForNewMessage" id="newMessage">
         <Chatsinfolder
           openFolder={openFolder}
           openChat={openChat}
@@ -239,12 +279,14 @@ const Folders = () => {
           handleSendMsgChange={handleSendMsgChange}
           textBar={textBar}
           openMoveFolder={openMoveFolder}
+          user={user}
         ></Chatsinfolder>
       </div>
       <div id="newMessageForm" hidden>
         <Newmessageform cancelSend={cancelSend} startNewChat={startNewChat}></Newmessageform>
       </div>
       <Movefolderpopup moveFolderTrigger={moveFolderButton} closeMoveFolder={closeMoveFolder} folders={user.folders} moveFolder={moveFolder}></Movefolderpopup>
+      <Newchatpopup newChatTrigger={newChatButton} closeNewChat={closeNewChat} startNewChat={startNewChat}></Newchatpopup>
     </div>
   );
 };
